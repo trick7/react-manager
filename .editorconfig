@@ -1,0 +1,11 @@
+# https://editorconfig.org
+#vscode需要安装EditorConfig for VS Code插件否则可能不生效
+root = true #根文件，对所有文件生效
+
+[*] #对所有文件生效
+charset = utf-8 #编辑器，语言格式
+indent_style = space #通过空格缩进
+indent_size = 2 #缩进距离
+end_of_line = lf #设置的换行符的表示方式，lf：全拼Line Feed，意思是换行，用符号 \n 表示。cr: 全拼Carriage Return， 意思是回车， 用符号 \r 表示。crlf：cr 和 lf的结合，回车换行，用符号 \r\n
+insert_final_newline = true #代码最后新增一行
+trim_trailing_whitespace = true #修剪尾随空格

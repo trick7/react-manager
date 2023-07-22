@@ -1,0 +1,16 @@
+.footer {
+  text-align: center;
+  line-height: 30px;
+  color: #b0aeae;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.footer :global(a) {
+  color: #b0aeae;
+}
+.footer :global(a):hover {
+  color: #ed6c00;
+}
+.footer :global(.gutter) {
+  margin: 0 10px;
+}

@@ -1,0 +1,60 @@
+.dashboard {
+  background-color: #fff;
+  padding: 20px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+}
+.userImg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 25px;
+}
+.report {
+  display: flex;
+}
+.card {
+  flex: 1;
+  height: 100px;
+  padding: 10px;
+  margin-right: 20px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+}
+.card:nth-child(1) {
+  background-color: #f4864f;
+}
+.card:nth-child(2) {
+  background-color: #887;
+}
+.card:nth-child(3) {
+  background-color: #4f95e5;
+}
+.card:nth-child(4) {
+  background-color: #6dc3d7;
+}
+.card:last-child {
+  margin-right: 0;
+}
+.data {
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+}
+.chart {
+  margin-top: 50px;
+  overflow: hidden;
+}
+.peiChart {
+  display: flex;
+}
+.itmPie {
+  flex: 1;
+  height: 400px;
+}
+.item-line {
+  height: 400px;
+}

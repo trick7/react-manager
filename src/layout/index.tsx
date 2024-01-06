@@ -28,12 +28,12 @@ const App: React.FC = () => {
         </Sider>
         <Layout>
           <NavHeader />
-          {/* <Content className={styles.content}> */}
-          <div className={styles.wrapper}>
-            <Outlet />
-          </div>
-          <NavFooter />
-          {/* </Content> */}
+          <Content className={styles.content}>
+            <div className={styles.wrapper}>
+              <Outlet />
+            </div>
+            <NavFooter />
+          </Content>
         </Layout>
       </Layout>
     </Watermark>

@@ -1,4 +1,3 @@
-import '@/App.css'
 import styles from './index.module.less'
 export default function Wecome() {
   return (

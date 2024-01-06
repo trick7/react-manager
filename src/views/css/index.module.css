@@ -1,60 +1,34 @@
-.dashboard {
-  background-color: #fff;
-  padding: 20px;
-}
-.user-info {
+.welcome {
   display: flex;
+  justify-content: center;
   align-items: center;
-}
-.userImg {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-right: 25px;
-}
-.report {
-  display: flex;
-}
-.card {
-  flex: 1;
-  height: 100px;
-  padding: 10px;
-  margin-right: 20px;
+  background-color: #fff;
   border-radius: 5px;
-  color: #fff;
-  font-size: 14px;
+  height: calc(100vh - 100px);
 }
-.card:nth-child(1) {
-  background-color: #f4864f;
+.content {
+  position: relative;
+  bottom: 40px;
 }
-.card:nth-child(2) {
-  background-color: #887;
+.content .subTitle {
+  font-size: 30px;
+  line-height: 42px;
+  color: #000;
 }
-.card:nth-child(3) {
-  background-color: #4f95e5;
+.content .title {
+  font-size: 40px;
+  line-height: 62px;
+  color: #ed6c00;
 }
-.card:nth-child(4) {
-  background-color: #6dc3d7;
-}
-.card:last-child {
-  margin-right: 0;
-}
-.data {
+.content .desc {
   text-align: center;
-  font-size: 24px;
-  color: #fff;
+  font-size: 14px;
+  color: gray;
 }
-.chart {
-  margin-top: 50px;
-  overflow: hidden;
-}
-.peiChart {
-  display: flex;
-}
-.itmPie {
-  flex: 1;
-  height: 400px;
-}
-.item-line {
-  height: 400px;
+.img {
+  background: url('/public/img/welcome-bg.png') no-repeat;
+  background-size: contain;
+  width: 370px;
+  height: 320px;
+  margin-left: 100px;
 }

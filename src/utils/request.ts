@@ -11,7 +11,7 @@ const instance = axios.create({
   timeoutErrorMessage: '请求超时，请稍后再试',
   withCredentials: true, //默认跨域
   headers: {
-    icode: '05EE49E39FED46D1'
+    icode: '5245E336FD24ADB7'
   }
 })
 // 请求拦截器
@@ -20,6 +20,7 @@ instance.interceptors.request.use(
     if (config.showLoading) showLoading()
     const token = storage.get('token')
     if (token) {
+      //设置请求的头部(header)中的Authorization字段，其值为Bearer加上localStorage中存储的token值
       config.headers.Authorization = 'Bearer ' + token
     }
     return {

@@ -9,7 +9,7 @@ const NavHeader = () => {
   // const collapsed = useBearStore(state => state.collapsed)
   const { userInfo, collapsed, updateCollapsed } = useBearStore()
   console.log(collapsed)
-
+  
   const breadList = [
     {
       title: '首页'

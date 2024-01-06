@@ -1,6 +1,9 @@
 /*
 工具函数封装
 */
+
+import { Menu } from '@/types/api'
+
 //格式化金额
 export const formatMoney = (num?: number | string) => {
   if (!num) return 0
@@ -15,9 +18,12 @@ export const formatNum = (num?: number | string) => {
   return a.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
 }
 //格式化日期
-export const toLocalDate = (date?: Date, rule?: string) => {
+export const toLocalDate = (date?: Date | string, rule?: string) => {
   let curDate = new Date()
-  if (date) curDate = date
+  //判断date类型 如果不是Date 就创建个Date来转换接受的值
+  if (date instanceof Date) curDate = date
+  else if (date) curDate = new Date(date)
+
   if (rule === 'yyyy-mm-dd') return curDate.toLocaleDateString().replaceAll('/', '-')
   if (rule === 'HH:mm:ss') return curDate.toLocaleTimeString().replaceAll('/', '-')
   return curDate.toLocaleString().replaceAll('/', '-')
@@ -53,4 +59,11 @@ export const formatState = (state: number) => {
   if (state === 1) return '在职'
   if (state === 2) return '试用期'
   if (state === 3) return '离职'
+}
+
+//获取页面路径
+export const getMenuPath = (list: Menu.MenuItem[]): string[] => {
+  return list.reduce((result: string[], item: Menu.MenuItem) => {
+    return result.concat(Array.isArray(item.children) && !item.buttons ? getMenuPath(item.children) : item.path + '')
+  }, [])
 }

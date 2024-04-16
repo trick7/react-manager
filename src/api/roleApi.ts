@@ -16,5 +16,13 @@ export default {
   //删除角色
   delRoleList(params: Role.DelParams) {
     return request.post('/roles/delete', params)
+  },
+  //设置权限
+  updetaPermisson(params: Role.Permission) {
+    return request.post('/roles/update/permission', params)
+  },
+  //获取所有角色列表
+  getAllRoleList() {
+    return request.get<Role.RoleItem[]>('/roles/allList')
   }
 }

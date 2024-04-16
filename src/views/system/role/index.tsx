@@ -5,13 +5,19 @@ import { useAntdTable } from 'ahooks'
 import { Button, Form, Input, Space, Table, message } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import CreateRole from './CreateRole'
+import SetPrmissiion from './setPrmissiion'
 import { useRef } from 'react'
 import { IAction } from '@/types/modal'
 import { ColumnsType } from 'antd/es/table'
 import { modal } from '@/utils/AntdGlobal'
+
 export default function RoleList() {
   const [form] = useForm()
   const roleRef = useRef<{
+    open: (type: IAction, data?: Role.RoleItem) => void
+  }>()
+  // 角色的ref
+  const pormissionRef = useRef<{
     open: (type: IAction, data?: Role.RoleItem) => void
   }>()
   const getTabeData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Role.Params) => {
@@ -64,9 +70,15 @@ export default function RoleList() {
       render(_id, record) {
         return (
           <Space>
-            <Button onClick={() => handleEdit(record)}>编辑</Button>
-            <Button>设置权限</Button>
-            <Button onClick={() => handelDelete(record._id)}>删除</Button>
+            <Button type='text' onClick={() => handleEdit(record)}>
+              编辑
+            </Button>
+            <Button type='text' onClick={() => handleSetPermission(record)}>
+              设置权限
+            </Button>
+            <Button type='text' danger onClick={() => handelDelete(record._id)}>
+              删除
+            </Button>
           </Space>
         )
       }
@@ -92,6 +104,10 @@ export default function RoleList() {
       }
     })
   }
+  // 设置权限
+  const handleSetPermission = (record: Role.RoleItem) => {
+    pormissionRef.current?.open('edit', record)
+  }
   return (
     <div className='role-wrap'>
       <Form form={form} className='serch-form' layout='inline'>
@@ -112,6 +128,7 @@ export default function RoleList() {
         </Form.Item>
       </Form>
       <div className='base-table'>
+        {/*  */}
         <div className='header-wrapper'>
           <div className='title'>角色列表</div>
           <div className='action'>
@@ -125,6 +142,8 @@ export default function RoleList() {
       </div>
       {/* 创建角色组件弹窗 */}
       <CreateRole mRef={roleRef} update={search.submit} />
+      {/* s设置权限 */}
+      <SetPrmissiion mRef={pormissionRef} update={search.submit}></SetPrmissiion>
     </div>
   )
 }

@@ -8,6 +8,7 @@ import CreateUser from './CreateUser'
 import { IAction } from '@/types/modal'
 import { message } from '@/utils/AntdGlobal'
 import { useAntdTable } from 'ahooks'
+import AuthButton from '@/components/AuthButton'
 export default function UserList() {
   //初始化form
   const [form] = Form.useForm()
@@ -54,7 +55,10 @@ export default function UserList() {
       })
   }
   // search中自带搜索(submit)和重置(reset)  tableProps 是列表数据
-  const { tableProps, search } = useAntdTable(getTabeData, { form })
+  const { tableProps, search } = useAntdTable(getTabeData, {
+    form,
+    defaultPageSize: 10
+  })
   //搜索
   const handleSearch = () => {
     search.submit()
@@ -205,9 +209,9 @@ export default function UserList() {
       render(record: User.UserItem) {
         return (
           <Space>
-            <Button type='text' onClick={() => handleEdit(record)}>
+            <AuthButton auth='user@create' type='text' onClick={() => handleEdit(record)}>
               编辑
-            </Button>
+            </AuthButton>
             <Button type='text' danger onClick={() => handleDel(record.userId)}>
               删除
             </Button>

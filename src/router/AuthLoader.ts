@@ -1,5 +1,12 @@
 import api from '@/api'
+import { Menu } from '@/types/api'
 import { getMenuPath } from '@/utils'
+
+export interface IAuthLoader {
+  buttonList: string[]
+  menuList: Menu.MenuItem[]
+  menuPathList: string[]
+}
 
 export default async function AuthLoader() {
   const data = await api.getPermissionList()
@@ -12,6 +19,6 @@ export default async function AuthLoader() {
     // 获取当前登录用户对应的菜单列表和按钮列表。
     buttonList: data.buttonList,
     menuList: data.menuList,
-    menuPathList
+    menuPathList //菜单路径列表
   }
 }

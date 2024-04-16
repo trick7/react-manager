@@ -6,8 +6,13 @@ import { Menu } from '@/types/api'
 
 //格式化金额
 export const formatMoney = (num?: number | string) => {
+  // 如果传入的num是undefined或者null，则返回0
   if (!num) return 0
+  // 将num转换为字符串，然后再转换为浮点数，确保可以处理数字和字符串类型的输入
   const a = parseFloat(num.toString())
+  // 使用toLocaleString方法将浮点数转换为带有中文格式和人民币符号的字符串
+  // 'zh-cn' 表示使用中文（简体，中国）的地区设置
+  // { style: 'currency', currency: 'CNY' } 表示使用货币格式，并指定货币为人民币
   return a.toLocaleString('zh-cn', { style: 'currency', currency: 'CNY' })
 }
 //格式化数字
@@ -66,4 +71,15 @@ export const getMenuPath = (list: Menu.MenuItem[]): string[] => {
   return list.reduce((result: string[], item: Menu.MenuItem) => {
     return result.concat(Array.isArray(item.children) && !item.buttons ? getMenuPath(item.children) : item.path + '')
   }, [])
+}
+
+//递归获取路由的对象
+export const searchRoute: any = (path: string, routes: any = []) => {
+  for (const item of routes) {
+    if (item.path === path) return item
+    if (item.children) {
+      return searchRoute(path, item.children)
+    }
+  }
+  return ''
 }

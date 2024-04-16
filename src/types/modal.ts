@@ -6,7 +6,7 @@ import { Dept, Menu, User } from './api'
  * 删除 delete
  */
 export type IAction = 'create' | 'edit' | 'delete'
-
+//默认为 User.UserItem 类型
 export interface IModalProp<T = User.UserItem> {
   mRef: MutableRefObject<{ open: (type: IAction, data: T) => void } | undefined>
   update: () => void

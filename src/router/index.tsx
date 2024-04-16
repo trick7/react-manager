@@ -5,13 +5,14 @@ import User from '@/views/system/user'
 import Dept from '@/views/system/dept'
 import Menu from '@/views/system/menu'
 import Role from '@/views/system/role'
+import OrderList from '@/views/order/OrderList'
 import NotFound from '@/views/NotFound'
 import Error403 from '@/views/403'
 import Layout from '@/layout'
 import Dashboard from '@/views/dashboard'
 import AuthLoader from './AuthLoader'
 
-const router = [
+export const router = [
   {
     path: '/',
     element: <Navigate to='/welcome' />
@@ -45,10 +46,18 @@ const router = [
       {
         path: '/MenuList',
         element: <Menu />
+        //mata配置不需要权限认证
+        // meta: {
+        //   auth: false
+        // }
       },
       {
         path: '/RoleList',
         element: <Role />
+      },
+      {
+        path: '/orderList',
+        element: <OrderList />
       }
     ]
   },

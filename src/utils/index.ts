@@ -28,34 +28,47 @@ export const toLocalDate = (date?: Date | string, rule?: string) => {
   //判断date类型 如果不是Date 就创建个Date来转换接受的值
   if (date instanceof Date) curDate = date
   else if (date) curDate = new Date(date)
-
+  // 如果规则为'yyyy-mm-dd'，则返回本地化的日期字符串，并确保使用'-'作为分隔符
   if (rule === 'yyyy-mm-dd') return curDate.toLocaleDateString().replaceAll('/', '-')
+  // 如果规则为'HH:mm:ss'，则返回本地化的时间字符串，并确保使用'-'作为分隔符
   if (rule === 'HH:mm:ss') return curDate.toLocaleTimeString().replaceAll('/', '-')
+  // 如果没有指定规则或规则不匹配，则返回完整的本地化日期和时间字符串，并确保使用'-'作为分隔符
   return curDate.toLocaleString().replaceAll('/', '-')
 }
-// 格式化日期
+
+// 格式化日期函数
+// date: 待格式化的日期，可以是Date对象或字符串形式，默认为当前日期
+// rule: 格式化规则，默认为'yyyy-MM-dd HH:mm:ss'
 export const formatDate = (date?: Date | string, rule?: string) => {
+  // 当前日期，默认为当前日期和时间
   let curDate = new Date()
+  /*
+   * 如果传入的date是Date对象，则直接使用它
+   *如果传入的date不是Date对象但存在，则尝试将其转换为Date对象
+   */
   if (date instanceof Date) curDate = date
   else if (date) curDate = new Date(date)
-
+  // 格式化规则，如果没有传入，则使用默认的'yyyy-MM-dd HH:mm:ss'
   let fmt = rule || 'yyyy-MM-dd HH:mm:ss'
+  // 将格式化规则中的'yyyy'替换为当前年份
   fmt = fmt.replace(/(y+)/, curDate.getFullYear().toString())
+  // 定义一个对象，存储日期和时间各个部分的数值
   type OType = {
     [key: string]: number
   }
   const O: OType = {
-    'M+': curDate.getMonth() + 1,
-    'd+': curDate.getDate(),
-    'H+': curDate.getHours(),
-    'm+': curDate.getMinutes(),
-    's+': curDate.getSeconds()
+    'M+': curDate.getMonth() + 1, // 月份，注意JS中月份是从0开始的，所以加1
+    'd+': curDate.getDate(), // 日期
+    'H+': curDate.getHours(), // 小时
+    'm+': curDate.getMinutes(), // 分钟
+    's+': curDate.getSeconds() // 秒
   }
+  // 遍历对象O，根据规则替换fmt中的占位符
   for (const k in O) {
-    // const val = O[k].toString()
+    // 格式化数字，如果数字大于9则直接转为字符串，否则前面补0
     fmt = fmt.replace(new RegExp(`(${k})`), O[k] > 9 ? O[k].toString() : '0' + O[k].toString())
-    // fmt = fmt.replace(new RegExp(`(${k})`), ('00' + val).substring(val.length))
   }
+  // 返回格式化后的日期字符串
   return fmt
 }
 
@@ -82,4 +95,15 @@ export const searchRoute: any = (path: string, routes: any = []) => {
     }
   }
   return ''
+}
+
+/**
+ * 手机号加密
+ * @example
+ * 17611000011 => 176****0011
+ */
+export const formateMobile = (mobile?: number) => {
+  if (!mobile) return '-'
+  const phone = mobile.toString()
+  return phone.replace(/(\d{3})\d*(\d{4})/, '$1****$2')
 }

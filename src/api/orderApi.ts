@@ -18,5 +18,9 @@ export default {
   // 创建订单
   createOrder(params: Order.CreateParams) {
     return request.post('/order/create', params)
+  },
+  //获取订单详情
+  getOrderDetail(orderId: string) {
+    return request.get<Order.OrderItem>(`/order/detail/${orderId}`)
   }
 }

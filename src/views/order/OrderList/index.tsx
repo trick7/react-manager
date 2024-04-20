@@ -5,11 +5,13 @@ import { Button, Form, Input, Select, Space, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { useRef } from 'react'
 import CreateOrder from './components/CreateOrder'
+import OrderDetail from './components/OrderDetail'
 import { formatDate, formatMoney } from '@/utils'
 
 export default function OrderList() {
   const [form] = Form.useForm()
   const orderRef = useRef<{ open: () => void }>()
+  const detailrRef = useRef<{ open: (orderId: string) => void }>()
   const getTabeData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Order.SearchParams) => {
     return api
       .getOrderList({
@@ -26,7 +28,7 @@ export default function OrderList() {
   }
   const { tableProps, search } = useAntdTable(getTabeData, {
     form,
-    // 分页参数 订单状态默认显示的参数
+    // 分页参数 订单状态默认显示state为1的参数
     defaultParams: [{ current: 1, pageSize: 10 }, { state: 1 }]
   })
 
@@ -98,7 +100,9 @@ export default function OrderList() {
       render(_, record) {
         return (
           <Space>
-            <Button type='text'>详情</Button>
+            <Button type='text' onClick={() => handleDetail(record.orderId)}>
+              详情
+            </Button>
             <Button type='text'>打点</Button>
             <Button type='text'>轨迹</Button>
             <Button type='text' danger>
@@ -112,6 +116,10 @@ export default function OrderList() {
   //创建订单
   const hadleCreate = () => {
     orderRef.current?.open()
+  }
+  //订单详情
+  const handleDetail = (orderId: string) => {
+    detailrRef.current?.open(orderId)
   }
   return (
     <div className='OrderList'>
@@ -151,10 +159,12 @@ export default function OrderList() {
           </div>
         </div>
         {/* rowSelection={{ type: 'checkbox' }} 选择框 */}
-        <Table bordered rowKey='userId' columns={columns} {...tableProps} />
+        <Table bordered rowKey='_id' columns={columns} {...tableProps} />
       </div>
       {/* 创建订单组件 */}
       <CreateOrder mRef={orderRef} update={search.submit} />
+      {/* 订单详情 */}
+      <OrderDetail mRef={detailrRef}></OrderDetail>
     </div>
   )
 }

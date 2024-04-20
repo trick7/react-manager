@@ -20,7 +20,7 @@ export default function CreateOrder(props: IModalProp) {
     setCityList(cityList)
     setVehicleList(vehicleList)
   }
-  //许父组件通过 ref 访问子组件的实例上暴露给父组件的特定方法。
+  //允许父组件通过 ref 访问子组件的实例上暴露给父组件的特定方法。
   useImperativeHandle(props.mRef, () => {
     return {
       open

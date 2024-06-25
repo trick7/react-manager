@@ -1,5 +1,5 @@
 import { MutableRefObject } from 'react'
-import { Dept, Menu, User } from './api'
+import { User } from './api'
 /**
  * 创建 create
  * 编辑 edit

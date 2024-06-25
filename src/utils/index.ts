@@ -104,6 +104,6 @@ export const searchRoute: any = (path: string, routes: any = []) => {
  */
 export const formateMobile = (mobile?: number) => {
   if (!mobile) return '-'
-  const phone = mobile.toString()
-  return phone.replace(/(\d{3})\d*(\d{4})/, '$1****$2')
+  const phone = mobile.toString() // 将手机号转换为字符串
+  return phone.replace(/(\d{3})\d*(\d{4})/, '$1****$2') // 使用正则表达式替换手机号
 }

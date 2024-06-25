@@ -174,7 +174,7 @@ export default function CreateUser(props: IModalProp) {
             showUploadList={false}
             headers={{
               Authorization: 'Bearer ' + storage.get('token'),
-              icode: '5245E336FD24ADB7'
+              icode: '750D1E982FEED3AA'
             }}
             // 接口上传地址
             action='/api/users/upload'

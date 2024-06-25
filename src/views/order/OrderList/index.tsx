@@ -1,21 +1,25 @@
 import api from '@/api/orderApi'
-import { Order, User } from '@/types/api'
+import { Order } from '@/types/api'
 import { useAntdTable } from 'ahooks'
-import { Button, Form, Input, Select, Space, Table } from 'antd'
+import { Button, Form, Input, Modal, Select, Space, Table, message } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { useRef } from 'react'
 import CreateOrder from './components/CreateOrder'
 import OrderDetail from './components/OrderDetail'
 import { formatDate, formatMoney } from '@/utils'
+import OrderMarker from './components/OrderMarker'
+import OrderRoute from './components/OrderRoute'
 
 export default function OrderList() {
   const [form] = Form.useForm()
-  const orderRef = useRef<{ open: () => void }>()
-  const detailrRef = useRef<{ open: (orderId: string) => void }>()
-  const getTabeData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Order.SearchParams) => {
+  const orderRef = useRef<{ open: () => void }>()//创建订单
+  const detailrRef = useRef<{ open: (orderId: string) => void }>()//订单详情
+  const markerRef = useRef<{ open: (orderId: string) => void }>()//订单打点
+  const routeRef = useRef<{ open: (orderId: string) => void }>()//订单轨迹
+  const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Order.SearchParams) => {
     return api
       .getOrderList({
-        ...formData,
+        ...formData,//搜索条件
         pageNum: current,
         pageSize: pageSize
       })
@@ -26,10 +30,12 @@ export default function OrderList() {
         }
       })
   }
-  const { tableProps, search } = useAntdTable(getTabeData, {
-    form,
+  // 获取表格数据
+  //tableProps是封装了分页、搜索、排序等操作的Props。
+  const { tableProps, search } = useAntdTable(getTableData, {
     // 分页参数 订单状态默认显示state为1的参数
-    defaultParams: [{ current: 1, pageSize: 10 }, { state: 1 }]
+    defaultParams: [{ current: 1, pageSize: 10 }, { state: 1 }],
+    form
   })
 
   const columns: ColumnsType<Order.OrderItem> = [
@@ -103,23 +109,46 @@ export default function OrderList() {
             <Button type='text' onClick={() => handleDetail(record.orderId)}>
               详情
             </Button>
-            <Button type='text'>打点</Button>
-            <Button type='text'>轨迹</Button>
-            <Button type='text' danger>
-              删除
-            </Button>
+            <Button type='text' onClick={() => handleMarker(record.orderId)}>打点</Button>
+            <Button type='text' onClick={() => handleRoute(record.orderId)}>轨迹</Button>
+            <Button type='text' danger onClick={() => handledel(record._id)}>删除</Button>
           </Space>
         )
       }
     }
   ]
+
   //创建订单
-  const hadleCreate = () => {
+  const handleCreate = () => {
     orderRef.current?.open()
   }
   //订单详情
   const handleDetail = (orderId: string) => {
     detailrRef.current?.open(orderId)
+  }
+  //订单打点
+  const handleMarker = (orderId: string) => {
+    markerRef.current?.open(orderId)
+  }
+  //行驶轨迹
+  const handleRoute = (orderId: string) => {
+    routeRef.current?.open(orderId)
+  }
+  //删除确认
+  const handledel = (_Id: string) => {
+    Modal.confirm({
+      title: '确认',
+      content: <span>确认删除订单吗</span>,
+      onOk: async () => {
+        await api.delOrder(_Id)
+        message.success('删除成功')
+        search.submit()//刷新表格
+      }
+    })
+  }
+  //文件导出
+  const handleExport = () => {
+    api.exprotData(form.getFieldsValue())
   }
   return (
     <div className='OrderList'>
@@ -153,8 +182,11 @@ export default function OrderList() {
         <div className='header-wrapper'>
           <div className='title'>用户列表</div>
           <div className='action'>
-            <Button type='primary' onClick={hadleCreate}>
+            <Button type='primary' onClick={handleCreate}>
               新增
+            </Button>
+            <Button type='primary' onClick={handleExport}>
+              导出
             </Button>
           </div>
         </div>
@@ -164,7 +196,11 @@ export default function OrderList() {
       {/* 创建订单组件 */}
       <CreateOrder mRef={orderRef} update={search.submit} />
       {/* 订单详情 */}
-      <OrderDetail mRef={detailrRef}></OrderDetail>
+      <OrderDetail mRef={detailrRef} />
+      {/* 地图打点*/}
+      <OrderMarker mRef={markerRef} />
+      {/* 行驶轨迹 */}
+      <OrderRoute mRef={routeRef} />
     </div>
   )
 }

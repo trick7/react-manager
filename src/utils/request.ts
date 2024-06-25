@@ -11,7 +11,7 @@ const instance = axios.create({
   timeoutErrorMessage: '请求超时，请稍后再试',
   withCredentials: true, //默认跨域
   headers: {
-    icode: 'A3668BAD4C0BFCC3'
+    icode: '750D1E982FEED3AA'
   }
 })
 // 请求拦截器
@@ -37,6 +37,7 @@ instance.interceptors.response.use(
   response => {
     const data: Result = response.data
     hideLoading()
+    if (response.config.responseType === 'blob') return response //如果是blob类型数据，直接返回response
     if (data.code === 500001) {
       message.error(data.msg)
       //登录失效后剔除token值，并且切换到登录页
@@ -70,5 +71,26 @@ export default {
   },
   post<T>(url: string, params?: object, option: IConfig = { showLoading: true, showError: true }): Promise<T> {
     return instance.post(url, params, option)
+  },
+  downloadFile(url: string, data: any, fileName = 'fileName.xlsx') {
+    instance({
+      url,
+      data,
+      method: 'post', //post请求
+      responseType: 'blob' //告诉服务器返回的是一个文件流
+    }).then(response => {
+      const blob = new Blob([response.data], {
+        //创建一个blob对象
+        type: response.data.type //获取文件类型
+      })
+      const name = (response.headers['file-name'] as string) || fileName //获取文件名
+      const link = document.createElement('a') //创建一个a标签
+      link.download = decodeURIComponent(name) //设置下载的文件名  decodeURIComponent对使用 encodeURIComponent 函数编码的 URI 组件进行解码
+      link.href = URL.createObjectURL(blob) //创建一个临时的url
+      document.body.append(link) //添加到body
+      link.click() //触发点击
+      document.body.removeChild(link) //移除
+      window.URL.revokeObjectURL(link.href) //释放内存
+    })
   }
 }

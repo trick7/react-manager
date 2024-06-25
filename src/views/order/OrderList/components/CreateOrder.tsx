@@ -6,10 +6,10 @@ import { Order } from '@/types/api'
 import { message } from '@/utils/AntdGlobal'
 export default function CreateOrder(props: IModalProp) {
   //控制弹窗显示
-  const [visible, setVisible] = useState(false)
-  const [form] = Form.useForm()
-  const [cityList, setCityList] = useState<Order.DictItem[]>([])
-  const [vehicleList, setVehicleList] = useState<Order.DictItem[]>([])
+  const [visible, setVisible] = useState(false)//弹窗显示
+  const [form] = Form.useForm()//表单
+  const [cityList, setCityList] = useState<Order.DictItem[]>([])//城市列表
+  const [vehicleList, setVehicleList] = useState<Order.DictItem[]>([])//车型列表
   useEffect(() => {
     getInitData()
   }, [])

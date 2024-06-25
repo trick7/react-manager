@@ -243,9 +243,9 @@ export namespace Order {
   }
 
   export interface SearchParams {
-    orderId?: string
-    userName?: string
-    state?: IState
+    orderId?: string //订单ID
+    userName?: string //用户名称
+    state?: IState //订单状态
   }
   export interface Params extends pageParams {
     orderId?: string
@@ -255,5 +255,9 @@ export namespace Order {
   export interface DictItem {
     id: string
     name: string
+  }
+  export interface OrderRoute {
+    orderId: string //订单ID
+    route: Array<{ lng: string; lat: string }> //行驶轨迹
   }
 }

@@ -79,21 +79,47 @@ export const formatState = (state: number) => {
   if (state === 3) return '离职'
 }
 
-//获取页面路径
+/**
+ * 获取菜单路径数组。
+ *
+ * 该函数通过遍历菜单项列表，构建一个包含所有菜单路径的字符串数组。
+ * 菜单项可能包含子菜单，这些子菜单的路径也会被递归地添加到结果中。
+ * 如果菜单项包含按钮而不是路径，那么该菜单项将被忽略，不添加到结果中。
+ *
+ * @param list 菜单项列表，每个菜单项包含路径和可能的子菜单。
+ * @returns 返回一个字符串数组，包含所有菜单项的路径。
+ */
 export const getMenuPath = (list: Menu.MenuItem[]): string[] => {
   return list.reduce((result: string[], item: Menu.MenuItem) => {
+    // 根据菜单项是否有子菜单和按钮来决定如何处理当前菜单项的路径
     return result.concat(Array.isArray(item.children) && !item.buttons ? getMenuPath(item.children) : item.path + '')
   }, [])
 }
 
 //递归获取路由的对象
+/**
+ * 在路由配置中搜索匹配特定路径的路由项。
+ *
+ * 该函数递归地搜索给定路由数组，以找到与指定路径完全匹配的路由项。
+ * 如果找到匹配的项，它将返回该项；如果没有找到，它将返回空字符串。
+ *
+ * @param path 要搜索的路径字符串。
+ * @param routes 路由配置数组，默认为空数组。
+ * @returns 匹配的路由项或空字符串。
+ */
 export const searchRoute: any = (path: string, routes: any = []) => {
+  // 遍历路由数组，寻找匹配的路由项
   for (const item of routes) {
+    // 如果当前项的路径与搜索路径完全匹配，则返回当前项
     if (item.path === path) return item
+    // 如果当前项有子项，递归搜索子项
     if (item.children) {
-      return searchRoute(path, item.children)
+      const result = searchRoute(path, item.children)
+      // 如果在子项中找到了匹配的项，则返回该项
+      if (result) return result
     }
   }
+  // 如果遍历完所有项都没有找到匹配的项，则返回空字符串
   return ''
 }
 
@@ -106,4 +132,37 @@ export const formateMobile = (mobile?: number) => {
   if (!mobile) return '-'
   const phone = mobile.toString() // 将手机号转换为字符串
   return phone.replace(/(\d{3})\d*(\d{4})/, '$1****$2') // 使用正则表达式替换手机号
+}
+
+/**
+ *递归查找树的路径
+ */
+/**
+ * 在菜单树中查找指定路径的节点。
+ *
+ * @param tree 菜单树，由多个菜单项组成的数组。
+ * @param pathName 需要查找的路径名称。
+ * @param path 当前遍历的路径，作为一个栈来使用。
+ * @returns 返回找到的路径数组，如果未找到则返回空数组。
+ */
+export const findTreeNode = (tree: Menu.MenuItem[], pathName: string, path: string[]): string[] => {
+  if (!tree) return [] // 如果树为空，返回空数组
+
+  // 遍历菜单树的每个节点
+  for (const data of tree) {
+    // 将当前第一级节点的名称添加到路径数组中
+    path.push(data.menuName)
+    // 如果当前节点的路径与目标路径相同，返回当前路径
+    if (data.path === pathName) return path
+    // 如果当前节点有子节点，递归查找子节点
+    if (data.children?.length) {
+      const list = findTreeNode(data.children, pathName, path)
+      // 如果在子节点中找到了目标路径，返回该路径
+      if (list.length) return list
+    }
+    // 如果当前节点不是目标节点，且没有子节点或子节点中未找到目标节点，移除当前节点名称 from 路径
+    path.pop()
+  }
+  // 如果遍历完所有节点仍未找到目标路径，返回空数组
+  return []
 }

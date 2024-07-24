@@ -37,6 +37,11 @@ export default {
   },
   //获取城市聚合点数据
   getCityData(cityId: number) {
+    //返回一个包含 { lng: string; lat: string } 对象的数组
     return request.get<Array<{ lng: string; lat: string }>>(`/order/cluster/${cityId}`)
+  },
+  //获取司机列表
+  getDriverList(params: Order.DriverParams) {
+    return request.get<ResultData<Order.DriverItem>>(`/order/driver/list`, params)
   }
 }

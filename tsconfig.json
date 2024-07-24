@@ -1,30 +1,30 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "target": "ESNext", //编译后的JavaScript代码将遵循最新版本的ECMAScript标准。
+    "useDefineForClassFields": true, //使用类字段而不是类属性来定义类属性。
+    "lib": ["ESNext", "DOM", "DOM.Iterable"], //包含了编译时需要的库文件列表，这里指定了"ESNext", "DOM", 和 "DOM.Iterable"，分别对应最新的ECMAScript标准库、DOM API和DOM的可迭代接口
+    "module": "ESNext", //指定了模块系统使用最新的ECMAScript模块标准
+    "skipLibCheck": true, //跳过对声明文件（.d.ts）的类型检查，这可以加快编译速度
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "moduleResolution": "bundler", //指定模块解析模式为"bundler"，这是Vite和React的默认配置
+    "allowImportingTsExtensions": true, //允许导入.ts和.tsx文件，这是Vite和React的默认配置
+    "resolveJsonModule": true, //允许从.json文件中导入模块
+    "isolatedModules": true, //使每个文件作为单独的编译单元，这有助于确保与Babel等工具的兼容性
+    "noEmit": true, //不生成输出文件
+    "jsx": "react-jsx", //使用React的JSX语法
 
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "strict": true, //启用严格模式，这是React的默认配置
+    "noUnusedLocals": true, //禁止未使用的局部变量
+    "noUnusedParameters": true, //禁止未使用的参数
+    "noFallthroughCasesInSwitch": true, //禁止switch语句中的fallthrough（即没有break）
     /*配置页面加载路径*/
-    "baseUrl": "./",
+    "baseUrl": "./", //设置根目录
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"] //设置路径别名
     }
   },
-  "include": ["src", "typomgs.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "typomgs.d.ts"], //指定了编译器应该包含哪些文件。这里包括src目录下的所有文件和typomgs.d.ts文件
+  "references": [{ "path": "./tsconfig.node.json" }] //引用的配置文件
 }

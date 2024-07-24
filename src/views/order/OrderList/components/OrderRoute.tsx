@@ -27,7 +27,7 @@ export default function OrderRoute(prpos: IDetailProp) {
       message.info('请先完成打点上报')
     }
   }
-
+  //渲染地图
   const renderMap = (detail: Order.OrderItem) => {
     const map = new window.BMapGL.Map('orderRouteMap')//创建地图
     map.centerAndZoom(detail.cityName, 17);  // 初始化地图,设置中心点坐标和地图级别

@@ -5,8 +5,8 @@ export const useBearStore = create<{
   userInfo: User.UserItem
   collapsed: boolean
   updateCollapsed: (collapsed: boolean) => void
-  updateToken: (token: string) => void
-  updateUserInfo: (userInfo: User.UserItem) => void
+  updateToken: (token: string) => void // 更新token
+  updateUserInfo: (userInfo: User.UserItem) => void // 更新用户信息
 }>(set => ({
   token: '',
   userInfo: {

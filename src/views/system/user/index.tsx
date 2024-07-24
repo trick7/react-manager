@@ -277,30 +277,30 @@ export default function UserList() {
           // dataSource={data}
           columns={columns}
           {...tableProps}
-          // pagination={{
-          //   //分页框位置
-          //   position: ['bottomRight'],
-          //   //当前页码
-          //   current: pagination.current,
-          //   //分页条数
-          //   pageSize: pagination.pageSize,
-          //   //总条数   key和value一样可以省略 total   ===  total:total
-          //   total,
-          //   //是否跳转
-          //   showQuickJumper: true,
-          //   //显示页码切换器
-          //   showSizeChanger: true,
-          //   //显示总条数
-          //   showTotal: function (total) {
-          //     return `总共:${total}条`
-          //   },
-          //   onChange: (page, pageSize) => {
-          //     setPagination({
-          //       current: page,
-          //       pageSize
-          //     })
-          //   }
-          // }}
+        // pagination={{
+        //   //分页框位置
+        //   position: ['bottomRight'],
+        //   //当前页码
+        //   current: pagination.current,
+        //   //分页条数
+        //   pageSize: pagination.pageSize,
+        //   //总条数   key和value一样可以省略 total   ===  total:total
+        //   total,
+        //   //是否跳转
+        //   showQuickJumper: true,
+        //   //显示页码切换器
+        //   showSizeChanger: true,
+        //   //显示总条数
+        //   showTotal: function (total) {
+        //     return `总共:${total}条`
+        //   },
+        //   onChange: (page, pageSize) => {
+        //     setPagination({
+        //       current: page,
+        //       pageSize
+        //     })
+        //   }
+        // }}
         />
       </div>
       <CreateUser

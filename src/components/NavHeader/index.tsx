@@ -1,15 +1,16 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Breadcrumb, Dropdown, Switch } from 'antd'
+import { Dropdown, Switch } from 'antd'
 import type { MenuProps } from 'antd'
 import styles from './index.module.less'
 import useBearStore from '@/store'
 import storage from '@/utils/storage'
+import BreadCrumb from './BreadCrumb'
 const NavHeader = () => {
   // const userInfo = useBearStore(state => state.userInfo)
   // const collapsed = useBearStore(state => state.collapsed)
   const { userInfo, collapsed, updateCollapsed } = useBearStore()
   console.log(collapsed)
-  
+
   const breadList = [
     {
       title: '首页'
@@ -43,7 +44,7 @@ const NavHeader = () => {
     <div className={styles.navHeader}>
       <div className={styles.left}>
         <div onClick={toggleCollapsed}>{collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}</div>
-        <Breadcrumb items={breadList} style={{ marginLeft: 10 }} />
+        <BreadCrumb />
       </div>
       <div id='right'>
         <Switch checkedChildren='暗黑' unCheckedChildren='默认' style={{ marginRight: 10 }} />

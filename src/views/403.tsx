@@ -8,7 +8,7 @@ function NotFound() {
   return (
     <Result
       status={403}
-      title='404'
+      title='403'
       subTitle='抱歉，您的权限不够'
       extra={
         <Button type='primary' onClick={handleClick}>

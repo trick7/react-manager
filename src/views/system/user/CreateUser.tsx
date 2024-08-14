@@ -63,6 +63,16 @@ export default function CreateUser(props: IModalProp) {
     //重置表单
     form.resetFields()
   }
+  /**
+   * 在文件上传之前进行验证。
+   * @param file 需要验证的文件对象。
+   * @returns 返回一个布尔值，表示文件是否符合要求。
+   *
+   * 此函数用于在用户上传图片之前检查图片的类型和大小是否符合规定。
+   * 它首先检查图片类型是否为JPEG或PNG，如果不是，则显示错误消息并阻止上传。
+   * 接着检查图片大小是否小于500KB，如果大于500KB，则显示错误消息。
+   * 最后，函数返回一个布尔值，指示文件是否同时满足类型和大小的要求。
+   */
   //上传之前的接口处理
   const beforeUpload = (file: RcFile) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
@@ -78,23 +88,34 @@ export default function CreateUser(props: IModalProp) {
     }
     return isJpgOrPng && isLt500k
   }
+  /**
+   * 处理文件上传的变化事件。
+   *
+   * 此函数是上传组件的onChange处理器，负责处理上传过程中的各种状态，如上传中、上传成功和上传失败。
+   * @param info 上传文件的变化参数，包含文件的状态和响应信息。
+   */
   //上传后图片处理
   const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
+    // 当文件处于上传中状态时，设置加载状态为true，提升用户体验
     //上传中
     if (info.file.status === 'uploading') {
       setLoading(true)
       return
     }
+    // 当文件上传成功时，处理上传结果
     //上传完成
     if (info.file.status === 'done') {
       setLoading(false)
+      // 解析上传成功的文件响应，通常包含处理后的文件URL或其他必要信息
       const { code, data, msg } = info.file.response
+      // 根据响应码判断上传是否成功，成功则更新图片URL，失败则显示错误消息
       if (code === 0) {
         setImg(data.file)
       } else {
         message.error(msg)
       }
     } else if (info.file.status === 'error') {
+      // 当文件上传失败时，显示错误消息
       message.error('服务器异常请稍后重试')
     }
   }
@@ -174,7 +195,7 @@ export default function CreateUser(props: IModalProp) {
             showUploadList={false}
             headers={{
               Authorization: 'Bearer ' + storage.get('token'),
-              icode: '750D1E982FEED3AA'
+              icode: 'B6052FAD1255B95F'
             }}
             // 接口上传地址
             action='/api/users/upload'

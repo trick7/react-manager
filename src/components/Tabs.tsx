@@ -1,10 +1,7 @@
 import { IAuthLoader } from "@/router/AuthLoader";
 import { searchRoute } from "@/utils";
 import { Tabs } from "antd";
-import { table } from "console";
-import { number } from "echarts";
 import { useEffect, useState } from "react";
-import { render } from "react-dom";
 import { useLocation, useNavigate, useRouteLoaderData } from "react-router-dom";
 
 interface TabsItem {
@@ -16,7 +13,7 @@ export default function TabsFC() {
   const navgate = useNavigate()
   const { pathname } = useLocation()//获取当前路径
   const [tabsList, setTabsList] = useState<TabsItem[]>([{ key: '/welcome', label: '首页', closable: false }])//创建tabsList
-  const [activeKey, setActiveKey] = useState('')
+  const [activeKey, setActiveKey] = useState('')//创建activeKey
   //权限判断 判断当前用户includes中是否有当前路径，没有就无法跳转
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const data = useRouteLoaderData('layout') as IAuthLoader
@@ -33,9 +30,9 @@ export default function TabsFC() {
     if (!tabsList.find(item => item.key == route.path)) {
       // 如果不存在，则创建一个新的标签页并添加到标签页列表中。
       tabsList.push({
-        key: route.path,
-        label: route.menuName,
-        closable: pathname !== '/welcome'
+        key: route.path,//设置为当前路由的路径
+        label: route.menuName,//设置为当前路由的菜单名称
+        closable: pathname !== '/welcome' //根据当前路径名（pathname）是否不等于'/welcome'来决定是否可关闭。如果当前路径不是'/welcome'，则closable为true，表示这个标签页是可关闭的；
       })
     }
     // 更新标签页列表的状态，以确保用户界面能够反映出变化。
@@ -72,14 +69,14 @@ export default function TabsFC() {
     setTabsList(tabsList.filter(item => item.key != path))
   }
   return <Tabs
-    activeKey={activeKey}
-    items={tabsList}
+    activeKey={activeKey}//设置当前激活的标签页
+    items={tabsList}//设置标签页列表
     tabBarStyle={{ height: 40, marginBottom: 0, backgroundColor: '#fff' }}
     type='editable-card'
     hideAdd
-    onChange={handleChange}
+    onChange={handleChange}//切换标签页
     onEdit={(path) => {
       handleDel(path as string)
-    }}
+    }}//处理标签页的删除操作
   />
 }

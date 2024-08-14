@@ -11,7 +11,7 @@ const instance = axios.create({
   timeoutErrorMessage: '请求超时，请稍后再试',
   withCredentials: true, //默认跨域
   headers: {
-    icode: '750D1E982FEED3AA'
+    icode: 'B6052FAD1255B95F'
   }
 })
 // 请求拦截器

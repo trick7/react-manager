@@ -9,6 +9,7 @@ import { IAction } from '@/types/modal'
 import { message } from '@/utils/AntdGlobal'
 import { useAntdTable } from 'ahooks'
 import AuthButton from '@/components/AuthButton'
+import SearchForm from '@/components/SearchForm'
 export default function UserList() {
   //初始化form
   const [form] = Form.useForm()
@@ -39,6 +40,7 @@ export default function UserList() {
    * @param current 总数
    * @param pageSize 每页数据
    * @param formData 表单数据 搜索用
+   * @returns 返回一个Promise，解析为一个对象，包含总页数和当前页的用户列表。
    */
   const getTabeData = ({ current, pageSize }: { current: number; pageSize: number }, formData: User.Params) => {
     return api
@@ -134,20 +136,29 @@ export default function UserList() {
       }
     })
   }
-  //公共删除用户接口
+  /**
+   * 处理用户提交的删除请求。
+   *
+   * 此函数用于批量删除用户。它首先调用API执行删除操作，然后显示删除成功的消息，
+   * 清空用户ID列表，并重置搜索条件。如果删除操作失败，错误信息将被记录在控制台中。
+   *
+   * @param ids 待删除的用户ID数组。
+   */
+  // 公共删除用户接口
   const handelUserSubmit = async (ids: number[]) => {
     try {
+      // 调用API删除用户。
       await api.deleteUser({
         userIds: ids
       })
+      // 显示删除成功的消息。
       message.success('删除成功')
+      // 清空用户ID列表，表示删除操作已完成。
       setUserIds([])
+      // 重置搜索条件，以便用户可以开始新的搜索。
       search.reset()
-      // getUserList({
-      //   pageNum: 1
-      //   // pageSize: pagination.pageSize
-      // })
     } catch (error) {
+      // 如果删除操作失败，记录错误信息到控制台。
       console.log('报错')
     }
   }
@@ -223,7 +234,7 @@ export default function UserList() {
 
   return (
     <div className='user-list'>
-      <Form className='serch-form' form={form} layout='inline' initialValues={{ state: 1 }}>
+      <SearchForm form={form} initialValues={{ state: 1 }} handleSearch={handleSearch} handleReset={handleReset}>
         <Form.Item name='userId' label='用户ID'>
           <Input placeholder='请输入用户ID' />
         </Form.Item>
@@ -238,17 +249,7 @@ export default function UserList() {
             <Select.Option value={3}>试用期</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item>
-          <Space>
-            <Button type='primary' onClick={handleSearch}>
-              搜索
-            </Button>
-            <Button type='default' onClick={handleReset}>
-              重置
-            </Button>
-          </Space>
-        </Form.Item>
-      </Form>
+      </SearchForm>
       <div className='base-table'>
         <div className='header-wrapper'>
           <div className='title'>用户列表</div>

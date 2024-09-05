@@ -13,27 +13,12 @@ import SearchForm from '@/components/SearchForm'
 export default function UserList() {
   //初始化form
   const [form] = Form.useForm()
-  //用户列表数据
-  // const [data, setData] = useState<User.UserItem[]>([])
-  //分页数据（总条数）
-  // const [total, setTotal] = useState(0)
+
   const [userIds, setUserIds] = useState<number[]>([])
   const userRef = useRef<{
     open: (type: IAction, data?: User.UserItem) => void
   }>()
 
-  //分页变量
-  // const [pagination, setPagination] = useState({
-  //   current: 1, //当前页数
-  //   pageSize: 10
-  // })
-  // useEffect(() => {
-  //   getUserList({
-  //     // 默认初始化的数据 第一页  一页10个数据
-  //     pageNum: pagination.current,
-  //     pageSize: pagination.pageSize
-  //   })
-  // }, [pagination.current, pagination.pageSize])
 
   /**
    *
@@ -77,6 +62,22 @@ export default function UserList() {
     //form自带的重置方法
     // form.resetFields()
   }
+  //用户列表数据
+  // const [data, setData] = useState<User.UserItem[]>([])
+  //分页数据（总条数）
+  // const [total, setTotal] = useState(0)
+  //分页变量
+  // const [pagination, setPagination] = useState({
+  //   current: 1, //当前页数
+  //   pageSize: 10
+  // })
+  // useEffect(() => {
+  //   getUserList({
+  //     // 默认初始化的数据 第一页  一页10个数据
+  //     pageNum: pagination.current,
+  //     pageSize: pagination.pageSize
+  //   })
+  // }, [pagination.current, pagination.pageSize])
   //获取用户列表
   //params 分页参数
   // const getUserList = async (params: pageParams) => {

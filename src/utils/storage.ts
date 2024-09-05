@@ -40,6 +40,6 @@ export default {
    * 清空所有localStorage值
    */
   clear() {
-    localStorage.clear
+    localStorage.clear()
   }
 }

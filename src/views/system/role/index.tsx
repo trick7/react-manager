@@ -20,6 +20,18 @@ export default function RoleList() {
   const pormissionRef = useRef<{
     open: (type: IAction, data?: Role.RoleItem) => void
   }>()
+  /**
+   * 获取表格数据
+   *
+   * 该函数用于从API获取角色列表数据，为前端表格展示提供数据支持
+   * 它根据分页信息和搜索条件获取相应数据，并将其格式化为表格组件所需的格式
+   *
+   * @param {Object} params - 包含当前页码和页面大小的对象
+   * @param {number} params.current - 当前页码
+   * @param {number} params.pageSize - 页面大小
+   * @param {Role.Params} formData - 搜索表单数据，作为查询参数的一部分用于过滤结果
+   * @returns {Promise<Object>} 返回一个Promise对象，包含总记录数和数据列表
+   */
   const getTabeData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Role.Params) => {
     return api
       .getRoleList({

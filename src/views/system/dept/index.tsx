@@ -10,9 +10,7 @@ import { message } from '@/utils/AntdGlobal'
 import { formatDate } from '@/utils'
 export default function DeptList() {
   const [form] = useForm()
-  const deptRef = useRef<{
-    open: (type: IAction, data?: Dept.EditParams | { parentId: string }) => void
-  }>()
+  const deptRef = useRef<{ open: (type: IAction, data?: Dept.EditParams | { parentId: string }) => void }>()
   const [data, setData] = useState<Dept.DeptItem[]>([])
   useEffect(() => {
     getDeptList()
